@@ -100,9 +100,9 @@ REM 2. Buat commit dengan pesan yang menyertakan versi aplikasi
 git commit -m "chore(release): build and release v%APP_VERSION% [skip ci]"
 
 REM 3. Dorong (push) commit ke repository GitLab Anda
-git push origin main
+git push origin master
 if %errorlevel% neq 0 (
-    echo [ERROR] GAGAL menjalankan 'git push'. Cek koneksi, otentikasi Git, dan nama branch (main/master).
+    echo [ERROR] GAGAL menjalankan 'git push'. Cek koneksi, otentikasi Git, dan pastikan nama branch sudah benar (main/master).
     goto :error
 )
 

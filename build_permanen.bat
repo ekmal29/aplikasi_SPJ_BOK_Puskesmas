@@ -23,7 +23,6 @@ for /f "delims=" %%a in ('powershell -command "(Get-FileHash 'release_artifacts\
 echo Memperbarui file update.json untuk Server...
 (
 echo {
-echo   "versi": "3.0",
 echo   "versi": "%APP_VERSION%",
 echo   "url": "https://gitlab.com/ekmal29/spj-puskesmas-pro/-/releases/v%APP_VERSION%/downloads/Download_SPJ_Terbaru.zip",
 echo   "changelog": "Versi 3.0:\n- Penyesuaian kewajiban input nomor surat SPT jika penandatangan bukan Kepala Puskesmas.\n- Peningkatan stabilitas dan perbaikan bug minor.\n\nVersi 2.8:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.7:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.6:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.5:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.4:\n1. Penambahan dropdown tahun pada list database perjadin dan belanja makan minum\n2. Update KOP surat sesuai instansi yang menandatangani\n3. Indikator data yang beririsan/duplikat\n4. Penambahan kode srikandi pada SPT Word sehingga SPT word tinggal upload ke srikandi\n5. Perbaikan bug",
@@ -45,7 +44,7 @@ REM 2. Buat commit dengan pesan yang menyertakan versi aplikasi
 git commit -m "Otomatis: Update rilis versi %APP_VERSION% dan skrip build"
 
 REM 3. Dorong (push) commit ke repository GitLab Anda
-git push origin main
+git push origin master
 
 REM 4. Buat Rilis baru di GitLab dan lampirkan file .zip menggunakan GitLab CLI
 glab release create v%APP_VERSION% "release_artifacts\Download_SPJ_Terbaru.zip" --name "Rilis Versi %APP_VERSION%" --notes "Pembaruan otomatis versi %APP_VERSION%."

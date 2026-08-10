@@ -8,6 +8,11 @@ echo.
 
 echo Membangun aplikasi SPJ BOK Puskesmas versi PERMANEN...
 echo Merapikan dependensi... & go mod tidy >nul 2>&1
+
+REM PENTING: Perbarui versi aplikasi di wails.json agar versi di dalam .exe sesuai
+echo Memperbarui versi internal aplikasi ke v%APP_VERSION%...
+wails version %APP_VERSION%
+
 echo Mohon tunggu sebentar (bisa memakan waktu beberapa detik)...
 wails build -clean
 echo.
@@ -25,7 +30,7 @@ echo Memperbarui file update.json untuk Server...
 echo {
 echo   "versi": "%APP_VERSION%",
 echo   "url": "https://gitlab.com/ekmal29/spj-puskesmas-pro/-/releases/v%APP_VERSION%/downloads/Download_SPJ_Terbaru.zip",
-echo   "changelog": "Versi 3.1:\n- Penambahan opsi penandatanganan SPT oleh Bupati.\n- Peningkatan stabilitas dan perbaikan bug minor.\n\nVersi 3.0:\n- Penyesuaian kewajiban input nomor surat SPT jika penandatangan bukan Kepala Puskesmas.\n- Peningkatan stabilitas dan perbaikan bug minor.\n\nVersi 2.8:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.7:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.6:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.5:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.4:\n1. Penambahan dropdown tahun pada list database perjadin dan belanja makan minum\n2. Update KOP surat sesuai instansi yang menandatangani\n3. Indikator data yang beririsan/duplikat\n4. Penambahan kode srikandi pada SPT Word sehingga SPT word tinggal upload ke srikandi\n5. Perbaikan bug",
+echo   "changelog": "- Penambahan opsi penandatanganan SPT oleh Bupati.\n- Perbaikan bug minor.",
 echo   "checksum": "%FILE_HASH%"
 echo }
 ) > "release_artifacts\update.json"

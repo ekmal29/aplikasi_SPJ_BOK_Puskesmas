@@ -1,6 +1,6 @@
 {
   "versi": "3.1",
   "url": "https://gitlab.com/ekmal29/spj-puskesmas-pro/-/releases/v3.1/downloads/Download_SPJ_Terbaru.zip",
-  "changelog": "Versi 3.1:\n- Penambahan opsi penandatanganan SPT oleh Bupati.\n- Peningkatan stabilitas dan perbaikan bug minor.\n\nVersi 3.0:\n- Penyesuaian kewajiban input nomor surat SPT jika penandatangan bukan Kepala Puskesmas.\n- Peningkatan stabilitas dan perbaikan bug minor.\n\nVersi 2.8:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.7:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.6:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.5:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.4:\n1. Penambahan dropdown tahun pada list database perjadin dan belanja makan minum\n2. Update KOP surat sesuai instansi yang menandatangani\n3. Indikator data yang beririsan/duplikat\n4. Penambahan kode srikandi pada SPT Word sehingga SPT word tinggal upload ke srikandi\n5. Perbaikan bug",
-  "checksum": "7ab598c3dc08a605a13a7af1be894c55dcf8fe4aba9943b05030d3cac4cee733"
+  "changelog": "- Penambahan opsi penandatanganan SPT oleh Bupati.\n- Perbaikan bug minor.",
+  "checksum": "505b7e29cf8d46f60b378f62a7059a81c557e091d0cca6b55cf9cf0e5891c680"
 }

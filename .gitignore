@@ -1,0 +1,11 @@
+# Abaikan semua file dan folder secara default
+*
+
+# KECUALI (JANGAN ABAIKAN) file dan folder di bawah ini:
+!.gitignore
+!build_permanen.bat
+!release_artifacts/
+
+# Jangan abaikan folder build, tapi abaikan isinya kecuali appicon.png
+/build/*
+!/build/appicon.png

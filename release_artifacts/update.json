@@ -1,6 +1,6 @@
 {
-  "versi": "3.0",
-  "url": "https://gitlab.com/ekmal29/spj-puskesmas-pro/-/releases/v3.0/downloads/Download_SPJ_Terbaru.zip",
-  "changelog": "Versi 3.0:\n- Penyesuaian kewajiban input nomor surat SPT jika penandatangan bukan Kepala Puskesmas.\n- Peningkatan stabilitas dan perbaikan bug minor.\n\nVersi 2.8:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.7:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.6:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.5:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.4:\n1. Penambahan dropdown tahun pada list database perjadin dan belanja makan minum\n2. Update KOP surat sesuai instansi yang menandatangani\n3. Indikator data yang beririsan/duplikat\n4. Penambahan kode srikandi pada SPT Word sehingga SPT word tinggal upload ke srikandi\n5. Perbaikan bug",
-  "checksum": "416219b4d9f71d6a234bc6cd87595c14a87c63d57358f47ec04983310d457f3f"
+  "versi": "3.1",
+  "url": "https://gitlab.com/ekmal29/spj-puskesmas-pro/-/releases/v3.1/downloads/Download_SPJ_Terbaru.zip",
+  "changelog": "Versi 3.1:\n- Penambahan opsi penandatanganan SPT oleh Bupati.\n- Peningkatan stabilitas dan perbaikan bug minor.\n\nVersi 3.0:\n- Penyesuaian kewajiban input nomor surat SPT jika penandatangan bukan Kepala Puskesmas.\n- Peningkatan stabilitas dan perbaikan bug minor.\n\nVersi 2.8:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.7:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.6:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.5:\n- Penyesuaian versi dan peningkatan stabilitas sistem.\n\nVersi 2.4:\n1. Penambahan dropdown tahun pada list database perjadin dan belanja makan minum\n2. Update KOP surat sesuai instansi yang menandatangani\n3. Indikator data yang beririsan/duplikat\n4. Penambahan kode srikandi pada SPT Word sehingga SPT word tinggal upload ke srikandi\n5. Perbaikan bug",
+  "checksum": "7ab598c3dc08a605a13a7af1be894c55dcf8fe4aba9943b05030d3cac4cee733"
 }

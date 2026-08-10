@@ -1,0 +1,12 @@
+{
+    "name":  "SPJ_BOK_Puskesmas",
+    "outputfilename":  "Aplikasi_SPJ.exe",
+    "frontend:dir":  "templates",
+    "author":  {
+                   "name":  "Puskesmas"
+               },
+    "info":  {
+
+             },
+    "productName":  "Aplikasi SPJ BOK Puskesmas v3.1"
+}

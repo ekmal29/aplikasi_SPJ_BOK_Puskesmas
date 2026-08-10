@@ -46,7 +46,12 @@ git commit -m "Otomatis: Update rilis versi %APP_VERSION% dan skrip build"
 REM 3. Dorong (push) commit ke repository GitLab Anda
 git push origin master
 
-REM 4. Buat Rilis baru di GitLab dan lampirkan file .zip menggunakan GitLab CLI
+REM 4. Hapus rilis lama (jika ada) untuk menghindari error duplikat aset. Opsi -y untuk konfirmasi otomatis.
+echo Menghapus rilis lama v%APP_VERSION% di GitLab (jika ada)...
+glab release delete v%APP_VERSION% -y >nul 2>&1
+
+REM 5. Buat Rilis baru di GitLab dan lampirkan file .zip menggunakan GitLab CLI
+echo Membuat rilis baru v%APP_VERSION% di GitLab...
 glab release create v%APP_VERSION% "release_artifacts\Download_SPJ_Terbaru.zip" --name "Rilis Versi %APP_VERSION%" --notes "Pembaruan otomatis versi %APP_VERSION%."
 
 echo.

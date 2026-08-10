@@ -101,10 +101,7 @@ git commit -m "chore(release): build and release v%APP_VERSION% [skip ci]"
 
 REM 3. Dorong (push) commit ke repository GitLab Anda
 git push origin master
-if %errorlevel% neq 0 (
-    echo [ERROR] GAGAL menjalankan 'git push'. Cek koneksi, otentikasi Git, dan pastikan nama branch sudah benar (main/master).
-    goto :error
-)
+if not %errorlevel% equ 0 goto :push_error
 
 REM 4. Hapus rilis lama (jika ada) untuk menghindari error duplikat aset. Opsi -y untuk konfirmasi otomatis.
 echo Menghapus rilis lama v%APP_VERSION% di GitLab (jika ada)...
@@ -121,6 +118,10 @@ if %errorlevel% neq 0 (
 echo.
 echo OTOMATISASI SELESAI! Versi %APP_VERSION% telah berhasil diunggah dan dirilis di GitLab.
 goto :end
+
+:push_error
+echo [ERROR] GAGAL menjalankan 'git push'. Cek koneksi, otentikasi Git, dan pastikan nama branch sudah benar (main/master).
+goto :error
 
 :error
 echo.

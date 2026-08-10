@@ -4,7 +4,7 @@
 # KECUALI (JANGAN ABAIKAN) file dan folder di bawah ini:
 !.gitignore
 !build_permanen.bat
-!release_artifacts/
+!/release_artifacts/
 
 # Jangan abaikan folder build, tapi abaikan isinya kecuali appicon.png
 /build/*

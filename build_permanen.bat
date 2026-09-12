@@ -123,7 +123,7 @@ echo Menghapus rilis lama v%APP_VERSION% di GitHub (jika ada)...
 
 REM 5. Buat rilis baru di GitHub dan lampirkan file .zip menggunakan GitHub CLI
 echo Membuat rilis baru v%APP_VERSION% di GitHub...
-"%GH_EXE%" release create v%APP_VERSION% "release_artifacts\Download_SPJ_Terbaru.zip" --title "Rilis Versi %APP_VERSION%" --notes-file "%CHANGELOG_FILE%"
+"%GH_EXE%" release create v%APP_VERSION% "release_artifacts\Download_SPJ_Terbaru.zip" --target main --title "Rilis Versi %APP_VERSION%" --notes-file "%CHANGELOG_FILE%"
 if %errorlevel% neq 0 (
     echo [ERROR] GAGAL membuat rilis di GitHub. Pastikan 'gh' terinstal, terkonfigurasi, dan file zip ada.
     goto :error

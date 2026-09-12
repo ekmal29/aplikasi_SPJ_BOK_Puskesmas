@@ -1,0 +1,2 @@
+- Penambahan opsi penandatanganan SPT oleh Bupati.
+- Perbaikan bug minor.

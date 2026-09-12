@@ -2,7 +2,8 @@
 # Skrip ini memperbarui properti 'productName' di wails.json.
 # Didesain agar tangguh, memastikan properti ada sebelum mencoba mengaturnya.
 param (
-    [string]$AppName
+    [string]$AppName,
+    [string]$Version
 )
 
 $wailsJsonPath = Join-Path (Get-Location) "wails.json"
@@ -20,6 +21,13 @@ try {
         $wailsConfig | Add-Member -MemberType NoteProperty -Name "productName" -Value $AppName
     } else {
         $wailsConfig.productName = $AppName
+    }
+
+    # Periksa dan perbarui properti 'version'.
+    if (-not $wailsConfig.PSObject.Properties.Name.Contains('version')) {
+        $wailsConfig | Add-Member -MemberType NoteProperty -Name "version" -Value $Version
+    } else {
+        $wailsConfig.version = $Version
     }
 
     $wailsConfig | ConvertTo-Json -Depth 100 | Set-Content $wailsJsonPath -NoNewline

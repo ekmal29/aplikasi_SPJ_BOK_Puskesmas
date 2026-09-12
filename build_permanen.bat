@@ -1,7 +1,14 @@
 @echo off
 setlocal
 
+cd /d "%~dp0"
+if %errorlevel% neq 0 (
+    echo [ERROR] Gagal masuk ke folder project.
+    goto :error
+)
+
 set APP_VERSION=3.1
+set "PATH=%ProgramFiles%\Go\bin;%USERPROFILE%\go\bin;%PATH%"
 
 echo Menutup aplikasi yang mungkin sedang berjalan agar tidak error...
 taskkill /F /IM Aplikasi_SPJ*.exe /T >nul 2>&1
@@ -21,20 +28,12 @@ if not exist "wails.json" (
     goto :error
 )
 
-REM PENTING: Perbarui versi aplikasi di wails.json agar versi di dalam .exe sesuai
-echo Memperbarui versi internal aplikasi ke v%APP_VERSION%...
-wails version %APP_VERSION%
-if %errorlevel% neq 0 (
-    echo [ERROR] GAGAL memperbarui versi di wails.json. Pastikan Wails CLI terinstal dan ada di PATH.
-    goto :error
-)
-
-REM Tambahkan versi pada judul aplikasi dengan memanggil skrip PowerShell yang bersih dan terpisah
-echo Menambahkan versi ke judul aplikasi...
+REM Perbarui versi internal dan judul aplikasi di wails.json menggunakan skrip PowerShell
+echo Memperbarui versi internal dan judul aplikasi ke v%APP_VERSION%...
 set "NEW_PRODUCT_NAME=Aplikasi SPJ BOK Puskesmas v%APP_VERSION%"
-powershell -ExecutionPolicy Bypass -NoProfile -File ".\update-wails-info.ps1" -AppName "%NEW_PRODUCT_NAME%"
+powershell -ExecutionPolicy Bypass -NoProfile -File ".\update-wails-info.ps1" -AppName "%NEW_PRODUCT_NAME%" -Version "%APP_VERSION%"
 if %errorlevel% neq 0 (
-    echo [ERROR] GAGAL memperbarui productName di wails.json.
+    echo [ERROR] GAGAL memperbarui wails.json menggunakan skrip PowerShell.
     goto :error
 )
 
@@ -45,18 +44,20 @@ echo.
 type wails.json
 echo.
 echo Periksa apakah "version" sudah benar-benar menjadi "v%APP_VERSION%".
-pause
 echo.
 
 echo Mohon tunggu sebentar (bisa memakan waktu beberapa detik)...
-wails build -clean
+REM Gunakan -ldflags untuk menyuntikkan nomor versi ke dalam variabel Go.
+REM Ganti 'main.AppVersion' jika variabel Anda ada di paket yang berbeda (mis. 'app.Version').
+wails build -clean -ldflags="-X 'main.AppVersion=%APP_VERSION%'"
+
 if %errorlevel% neq 0 (
     echo [ERROR] GAGAL saat build aplikasi dengan Wails.
     goto :error
 )
 echo.
 
-echo Menyiapkan folder "release_artifacts" untuk unggah ke GitLab...
+echo Menyiapkan folder "release_artifacts" untuk unggah ke GitHub...
 if not exist "release_artifacts" mkdir "release_artifacts"
 
 echo Mengompres file .exe menjadi .zip...
@@ -73,24 +74,37 @@ if not defined FILE_HASH (
     goto :error
 )
 
-echo Memperbarui file update.json untuk Server...
-(
-echo {
-echo   "versi": "%APP_VERSION%",
-echo   "url": "https://gitlab.com/ekmal29/spj-puskesmas-pro/-/releases/v%APP_VERSION%/downloads/Download_SPJ_Terbaru.zip",
-echo   "changelog": "- Penambahan opsi penandatanganan SPT oleh Bupati.\n- Perbaikan bug minor.",
-echo   "checksum": "%FILE_HASH%"
-echo }
-) > "release_artifacts\update.json"
+echo Memperbarui file update.json untuk Server dari changelog.txt...
+set "CHANGELOG_FILE=changelog.txt"
+if not exist "%CHANGELOG_FILE%" (
+    echo [ERROR] File changelog '%CHANGELOG_FILE%' tidak ditemukan. Buat file tersebut dengan isi catatan rilis.
+    goto :error
+)
+
+powershell -NoProfile -Command "$changelogContent = (Get-Content -Path '%CHANGELOG_FILE%' -Encoding UTF8 -Raw) -replace '`r`n|`n|`r', '\n'; $updateInfo = [ordered]@{ 'versi' = '%APP_VERSION%'; 'url' = 'https://github.com/ekmal2907/aplikasi_SPJ_BOK_Puskesmas/releases/download/v%APP_VERSION%/Download_SPJ_Terbaru.zip'; 'changelog' = $changelogContent; 'checksum' = '%FILE_HASH%'; }; $updateInfo | ConvertTo-Json -Depth 3 | Set-Content -Path 'release_artifacts\update.json' -Encoding UTF8 -NoNewline"
+
 echo.
 echo SELESAI! File rilis telah disiapkan di folder "release_artifacts".
 
-REM --- TAHAP OTOMATISASI UPLOAD KE GITLAB ---
+REM --- TAHAP OTOMATISASI UPLOAD KE GITHUB ---
 echo.
-echo Memulai proses unggah otomatis ke GitLab...
+echo Memulai proses unggah otomatis ke GitHub...
+
+set "GH_EXE=gh"
+if exist "%ProgramFiles%\GitHub CLI\gh.exe" set "GH_EXE=%ProgramFiles%\GitHub CLI\gh.exe"
+where gh >nul 2>&1
+if %errorlevel% neq 0 if not exist "%GH_EXE%" (
+    echo [ERROR] GitHub CLI 'gh' tidak ditemukan. Instal dari https://cli.github.com/ lalu jalankan 'gh auth login'.
+    goto :error
+)
+"%GH_EXE%" auth status >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [ERROR] GitHub CLI belum terautentikasi. Jalankan 'gh auth login' terlebih dahulu.
+    goto :error
+)
 
 REM 1. Tambahkan file yang relevan ke Git. Termasuk wails.json untuk melacak versi.
-git add wails.json "release_artifacts\update.json" "%~nx0" "update-wails-info.ps1"
+git add wails.json "release_artifacts\update.json" "%~nx0" "update-wails-info.ps1" "%CHANGELOG_FILE%"
 if %errorlevel% neq 0 (
     echo [ERROR] GAGAL menjalankan 'git add'. Pastikan Git terinstal dan ini adalah repo Git.
     goto :error
@@ -99,24 +113,24 @@ if %errorlevel% neq 0 (
 REM 2. Buat commit dengan pesan yang menyertakan versi aplikasi
 git commit -m "chore(release): build and release v%APP_VERSION% [skip ci]"
 
-REM 3. Dorong (push) commit ke repository GitLab Anda
-git push origin master
+REM 3. Dorong (push) commit ke repository GitHub Anda
+git push origin master:main
 if not %errorlevel% equ 0 goto :push_error
 
 REM 4. Hapus rilis lama (jika ada) untuk menghindari error duplikat aset. Opsi -y untuk konfirmasi otomatis.
-echo Menghapus rilis lama v%APP_VERSION% di GitLab (jika ada)...
-glab release delete v%APP_VERSION% -y >nul 2>&1
+echo Menghapus rilis lama v%APP_VERSION% di GitHub (jika ada)...
+"%GH_EXE%" release delete v%APP_VERSION% --yes >nul 2>&1
 
-REM 5. Buat Rilis baru di GitLab dan lampirkan file .zip menggunakan GitLab CLI
-echo Membuat rilis baru v%APP_VERSION% di GitLab...
-glab release create v%APP_VERSION% "release_artifacts\Download_SPJ_Terbaru.zip" --name "Rilis Versi %APP_VERSION%" --notes "Pembaruan otomatis versi %APP_VERSION%."
+REM 5. Buat rilis baru di GitHub dan lampirkan file .zip menggunakan GitHub CLI
+echo Membuat rilis baru v%APP_VERSION% di GitHub...
+"%GH_EXE%" release create v%APP_VERSION% "release_artifacts\Download_SPJ_Terbaru.zip" --title "Rilis Versi %APP_VERSION%" --notes-file "%CHANGELOG_FILE%"
 if %errorlevel% neq 0 (
-    echo [ERROR] GAGAL membuat rilis di GitLab. Pastikan 'glab' terinstal, terkonfigurasi, dan file zip ada.
+    echo [ERROR] GAGAL membuat rilis di GitHub. Pastikan 'gh' terinstal, terkonfigurasi, dan file zip ada.
     goto :error
 )
 
 echo.
-echo OTOMATISASI SELESAI! Versi %APP_VERSION% telah berhasil diunggah dan dirilis di GitLab.
+echo OTOMATISASI SELESAI! Versi %APP_VERSION% telah berhasil diunggah dan dirilis di GitHub.
 goto :end
 
 :push_error
@@ -132,4 +146,3 @@ echo =================================================================
 echo.
 
 :end
-pause

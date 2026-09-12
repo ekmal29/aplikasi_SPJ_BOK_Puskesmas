@@ -1,6 +1,6 @@
 ﻿{
-    "versi":  "3.2",
-    "url":  "https://github.com/ekmal29/aplikasi_SPJ_BOK_Puskesmas/releases/download/v3.2/Download_SPJ_Terbaru.zip",
-    "changelog":  "- Peningkatan sistem pembaruan otomatis ke GitHub.\r\n- Perbaikan bug minor.",
-    "checksum":  "0af87b16a254e16ae8766c376b0f8538a826f57bae5788093e98a9eebdbecdb7"
+    "versi":  "3.3",
+    "url":  "https://github.com/ekmal29/aplikasi_SPJ_BOK_Puskesmas/releases/download/v3.3/Download_SPJ_Terbaru.zip",
+    "changelog":  "- Penyempurnaan sistem aplikasi.\r\n- Perbaikan bug minor.",
+    "checksum":  "7dc7d3aeb06ee7e0160195d3f538b4827b58aded7eaa22640de6d5d5a718f0c5"
 }

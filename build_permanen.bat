@@ -7,7 +7,7 @@ if %errorlevel% neq 0 (
     goto :error
 )
 
-set APP_VERSION=3.2
+set APP_VERSION=3.3
 set "PATH=%ProgramFiles%\Go\bin;%USERPROFILE%\go\bin;%PATH%"
 
 echo Menutup aplikasi yang mungkin sedang berjalan agar tidak error...

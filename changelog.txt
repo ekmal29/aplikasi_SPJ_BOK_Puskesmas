@@ -1,2 +1,2 @@
-- Peningkatan sistem pembaruan otomatis ke GitHub.
+- Penyempurnaan sistem aplikasi.
 - Perbaikan bug minor.

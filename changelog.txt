@@ -1,2 +1,2 @@
-- Penambahan opsi penandatanganan SPT oleh Bupati.
+- Peningkatan sistem pembaruan otomatis ke GitHub.
 - Perbaikan bug minor.

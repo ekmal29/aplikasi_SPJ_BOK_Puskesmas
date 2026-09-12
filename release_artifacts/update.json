@@ -1,6 +1,6 @@
 ﻿{
-    "versi":  "3.1",
-    "url":  "https://github.com/ekmal29/aplikasi_SPJ_BOK_Puskesmas/releases/download/v3.1/Download_SPJ_Terbaru.zip",
-    "changelog":  "- Penambahan opsi penandatanganan SPT oleh Bupati.\r\n- Perbaikan bug minor.",
-    "checksum":  "770bb2b61a0ae1b736b164c7bd86ac94e7a2eea880f8ddb959883c247d28e1f5"
+    "versi":  "3.2",
+    "url":  "https://github.com/ekmal29/aplikasi_SPJ_BOK_Puskesmas/releases/download/v3.2/Download_SPJ_Terbaru.zip",
+    "changelog":  "- Peningkatan sistem pembaruan otomatis ke GitHub.\r\n- Perbaikan bug minor.",
+    "checksum":  "0af87b16a254e16ae8766c376b0f8538a826f57bae5788093e98a9eebdbecdb7"
 }

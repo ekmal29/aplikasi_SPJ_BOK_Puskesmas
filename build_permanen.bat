@@ -81,7 +81,7 @@ if not exist "%CHANGELOG_FILE%" (
     goto :error
 )
 
-powershell -NoProfile -Command "$changelogContent = (Get-Content -Path '%CHANGELOG_FILE%' -Encoding UTF8 -Raw) -replace '`r`n|`n|`r', '\n'; $updateInfo = [ordered]@{ 'versi' = '%APP_VERSION%'; 'url' = 'https://github.com/ekmal29/aplikasi_SPJ_BOK_Puskesmas/releases/download/v%APP_VERSION%/Download_SPJ_Terbaru.zip'; 'changelog' = $changelogContent; 'checksum' = '%FILE_HASH%'; }; $updateInfo | ConvertTo-Json -Depth 3 | Set-Content -Path 'release_artifacts\update.json' -Encoding UTF8 -NoNewline"
+powershell -NoProfile -Command "$changelogContent = (Get-Content -Path '%CHANGELOG_FILE%' -Encoding UTF8 -Raw) -replace '`r`n|`n|`r', '\n'; $updateInfo = [ordered]@{ 'versi' = '%APP_VERSION%'; 'url' = 'https://github.com/ekmal29/aplikasi_SPJ_BOK_Puskesmas/releases/download/v%APP_VERSION%/Download_SPJ_Terbaru.zip'; 'changelog' = $changelogContent; 'checksum' = '%FILE_HASH%'; }; $json = $updateInfo | ConvertTo-Json -Depth 3; [System.IO.File]::WriteAllText((Join-Path (Get-Location) 'release_artifacts\update.json'), $json, (New-Object System.Text.UTF8Encoding($false)))"
 
 echo.
 echo SELESAI! File rilis telah disiapkan di folder "release_artifacts".

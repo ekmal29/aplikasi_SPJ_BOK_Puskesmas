@@ -1,2 +1,2 @@
+- Pengujian pembaruan otomatis versi 3.4.
 - Penyempurnaan sistem aplikasi.
-- Perbaikan bug minor.

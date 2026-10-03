@@ -14,7 +14,7 @@ echo Menutup aplikasi yang mungkin sedang berjalan agar tidak error...
 taskkill /F /IM Aplikasi_SPJ*.exe /T >nul 2>&1
 echo.
 
-echo Membangun aplikasi SPJ BOK Puskesmas versi PERMANEN...
+echo Membangun aplikasi Generator SPJ versi PERMANEN...
 echo Merapikan dependensi...
 go mod tidy >nul 2>&1
 if %errorlevel% neq 0 (
@@ -30,7 +30,7 @@ if not exist "wails.json" (
 
 REM Perbarui versi internal dan judul aplikasi di wails.json menggunakan skrip PowerShell
 echo Memperbarui versi internal dan judul aplikasi ke v%APP_VERSION%...
-set "NEW_PRODUCT_NAME=Aplikasi SPJ BOK Puskesmas v%APP_VERSION%"
+set "NEW_PRODUCT_NAME=Generator SPJ v%APP_VERSION%"
 powershell -ExecutionPolicy Bypass -NoProfile -File ".\update-wails-info.ps1" -AppName "%NEW_PRODUCT_NAME%" -Version "%APP_VERSION%"
 if %errorlevel% neq 0 (
     echo [ERROR] GAGAL memperbarui wails.json menggunakan skrip PowerShell.

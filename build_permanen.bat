@@ -7,14 +7,11 @@ if %errorlevel% neq 0 (
     goto :error
 )
 
-set APP_VERSION=3.4
+set APP_VERSION=3.5
 set "PATH=%ProgramFiles%\Go\bin;%USERPROFILE%\go\bin;%PATH%"
 
-echo Menutup aplikasi yang mungkin sedang berjalan agar tidak error...
-taskkill /F /IM Aplikasi_SPJ*.exe /T >nul 2>&1
-echo.
-
 echo Membangun aplikasi Generator SPJ versi PERMANEN...
+echo Database lokal akan dipertahankan selama build.
 echo Merapikan dependensi...
 go mod tidy >nul 2>&1
 if %errorlevel% neq 0 (
@@ -48,8 +45,7 @@ echo.
 
 echo Mohon tunggu sebentar (bisa memakan waktu beberapa detik)...
 REM Gunakan -ldflags untuk menyuntikkan nomor versi ke dalam variabel Go.
-REM Ganti 'main.AppVersion' jika variabel Anda ada di paket yang berbeda (mis. 'app.Version').
-wails build -clean -ldflags="-X 'main.AppVersion=%APP_VERSION%'"
+wails build -ldflags="-X 'main.AppVersion=%APP_VERSION%'"
 
 if %errorlevel% neq 0 (
     echo [ERROR] GAGAL saat build aplikasi dengan Wails.
@@ -61,7 +57,7 @@ echo Menyiapkan folder "release_artifacts" untuk unggah ke GitHub...
 if not exist "release_artifacts" mkdir "release_artifacts"
 
 echo Mengompres file .exe menjadi .zip...
-powershell -command "Compress-Archive -Path 'build\bin\*.exe' -DestinationPath 'release_artifacts\Download_SPJ_Terbaru.zip' -Force"
+powershell -command "if (-not (Test-Path 'build\bin\Aplikasi_SPJ.exe')) { throw 'Executable produksi tidak ditemukan.' }; Compress-Archive -Path 'build\bin\Aplikasi_SPJ.exe' -DestinationPath 'release_artifacts\Download_SPJ_Terbaru.zip' -Force"
 if %errorlevel% neq 0 (
     echo [ERROR] GAGAL mengompres file .exe. Mungkin proses build gagal?
     goto :error
@@ -104,24 +100,21 @@ if %errorlevel% neq 0 (
 )
 
 REM 1. Tambahkan file yang relevan ke Git. Termasuk wails.json untuk melacak versi.
-git add wails.json "release_artifacts\update.json" "%~nx0" "update-wails-info.ps1" "%CHANGELOG_FILE%"
+git add wails.json main.go "templates\login.html" "release_artifacts\update.json" "%~nx0" "update-wails-info.ps1" "%CHANGELOG_FILE%"
 if %errorlevel% neq 0 (
     echo [ERROR] GAGAL menjalankan 'git add'. Pastikan Git terinstal dan ini adalah repo Git.
     goto :error
 )
 
 REM 2. Buat commit dengan pesan yang menyertakan versi aplikasi
-git commit -m "chore(release): build and release v%APP_VERSION% [skip ci]"
+git commit -m "chore(release): build and release v%APP_VERSION% [skip ci]" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
 
 REM 3. Dorong (push) commit ke repository GitHub Anda
 git push origin master:main
 if not %errorlevel% equ 0 goto :push_error
 
-REM 4. Hapus rilis lama (jika ada) untuk menghindari error duplikat aset. Opsi -y untuk konfirmasi otomatis.
-echo Menghapus rilis lama v%APP_VERSION% di GitHub (jika ada)...
-"%GH_EXE%" release delete v%APP_VERSION% --yes >nul 2>&1
-
-REM 5. Buat rilis baru di GitHub dan lampirkan file .zip menggunakan GitHub CLI
+REM 4. Buat rilis baru di GitHub dan lampirkan file .zip menggunakan GitHub CLI.
+REM Rilis yang sudah ada tidak pernah dihapus oleh skrip ini.
 echo Membuat rilis baru v%APP_VERSION% di GitHub...
 "%GH_EXE%" release create v%APP_VERSION% "release_artifacts\Download_SPJ_Terbaru.zip" --target main --title "Rilis Versi %APP_VERSION%" --notes-file "%CHANGELOG_FILE%"
 if %errorlevel% neq 0 (

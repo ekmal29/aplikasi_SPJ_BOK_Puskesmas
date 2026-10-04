@@ -1,6 +1,6 @@
 {
-    "versi":  "3.4",
-    "url":  "https://github.com/ekmal29/aplikasi_SPJ_BOK_Puskesmas/releases/download/v3.4/Download_SPJ_Terbaru.zip",
-    "changelog":  "- Pengujian pembaruan otomatis versi 3.4.\r\n- Penyempurnaan sistem aplikasi.",
-    "checksum":  "565625fc9c1a26fdd83154b6e1ebb221931ef38b5dd7213d645dd3035df61cfa"
+    "versi":  "3.5",
+    "url":  "https://github.com/ekmal29/aplikasi_SPJ_BOK_Puskesmas/releases/download/v3.5/Download_SPJ_Terbaru.zip",
+    "changelog":  "- Penyempurnaan tampilan form Perjalanan Dinas dan Belanja Makan Minum.\r\n- Perbaikan perhitungan total Perjalanan Dinas untuk SPT Srikandi.\r\n- API key Gemini bersama dapat dikelola oleh semua pengguna yang sudah masuk.\r\n- Perbaikan pemrosesan tanggal dan dokumen perjalanan dinas.",
+    "checksum":  "ff21456da41a6c5d6d17fa6356132ec1cc9ceb10a51a52d121300d7942737695"
 }

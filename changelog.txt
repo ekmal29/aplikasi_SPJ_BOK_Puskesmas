@@ -1,2 +1,4 @@
-- Pengujian pembaruan otomatis versi 3.4.
-- Penyempurnaan sistem aplikasi.
+- Penyempurnaan tampilan form Perjalanan Dinas dan Belanja Makan Minum.
+- Perbaikan perhitungan total Perjalanan Dinas untuk SPT Srikandi.
+- API key Gemini bersama dapat dikelola oleh semua pengguna yang sudah masuk.
+- Perbaikan pemrosesan tanggal dan dokumen perjalanan dinas.

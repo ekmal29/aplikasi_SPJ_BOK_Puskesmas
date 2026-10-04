@@ -1,0 +1,34 @@
+<div id="loginPage">
+    <div class="login-card">
+        <section class="login-brand-panel" aria-label="Tentang Generator SPJ">
+            <div class="login-brand-content">
+                <div class="login-brand-mark" aria-hidden="true">GS</div>
+                <p class="login-eyebrow">ALAT BANTU PENYUSUNAN DOKUMEN</p>
+                <h1>Generator SPJ</h1>
+                <p class="login-brand-description">Membantu mempermudah penyusunan dokumen SPJ.</p>
+            </div>
+            <div class="login-brand-footer">Aplikasi ini tidak memeriksa atau menjamin kebenaran isi maupun kesesuaian format SPJ. Pemeriksaan dan tanggung jawab atas dokumen tetap berada pada pengguna.</div>
+        </section>
+
+        <section class="login-form-panel" aria-labelledby="loginHeading">
+            <div class="login-form-heading">
+                <p class="login-eyebrow">SELAMAT DATANG</p>
+                <h2 id="loginHeading">Masuk ke akun Anda</h2>
+                <p>Silakan masukkan username dan password untuk melanjutkan.</p>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Masukkan username" autocomplete="username">
+            </div>
+            <div class="form-group login-password-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" autocomplete="current-password">
+                <button type="button" class="login-password-toggle" onclick="togglePasswordVisibility('password', this)" aria-label="Tampilkan password">👁️</button>
+            </div>
+            <button class="btn-login" onclick="prosesLogin()">Masuk Aplikasi <span aria-hidden="true">→</span></button>
+            <div class="login-divider"><span>atau</span></div>
+            <button type="button" class="btn-device-check" onclick="cekKelayakanKomputer()">🔍 Cek Kelayakan Laptop/Komputer</button>
+            <div class="login-version">Generator SPJ <span>•</span> Versi <strong id="loginVersion">3.5</strong></div>
+        </div>
+    </div>
+</div>
